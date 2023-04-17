@@ -1,11 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package themis.themis;
-
 import java.util.Date;
 import java.util.Scanner;
+import java.sql.Connection;
+import themis.db.DataBaseConnection;
 
 /**
  *
@@ -14,6 +14,8 @@ import java.util.Scanner;
 public class Themis {
 
     public static void main(String[] args) {
+        DataBaseConnection dbConnect = new DataBaseConnection();
+        Connection connection = dbConnect.PostgreSQLConnection();
         int i = 0;
         while (i == 0) {
             Scanner teclado = new Scanner(System.in);
@@ -90,15 +92,43 @@ public class Themis {
                     int innerOpcao = Integer.parseInt(teclado.nextLine());
                     LembreteProcesso lembreteProcesso = new LembreteProcesso(1, 1, 01, new Date().toString(),
                             "Tribunal", "Vara", "Empregador", "Advogado", "Categoria", "Assunto", "Em Amdamento");
-                    String bilhete;
+
+                    int numProcesso;
+                    int numAudiencia;
+                    String dataAudiencia;
+                    String tribunal;
+                    String vara;
+                    String nomeEmpregador;
+                    String nomeAdvogado;
+                    String categoria;
+                    String assunto;
+                    String status;
                     switch (innerOpcao) {
                         case 1:
+                            System.out.println("Digite o Numero do Processo: ");
+                            numProcesso = teclado.nextInt();
+                            System.out.println("Digite o Numero da Audiencia: ");
+                            numAudiencia = teclado.nextInt();
+                            System.out.println("Escreva a Data da Audiencia: ");
+                            dataAudiencia = teclado.nextLine();
+                            System.out.println("Nome do Tribunal: ");
+                            tribunal = teclado.nextLine();
+                            System.out.println("Numero da Vara: ");
+                            vara = teclado.nextLine();
+                            System.out.println("Nome do Empregador: ");
+                            nomeEmpregador = teclado.nextLine();
+                            System.out.println("Nome do Advogado: ");
+                            nomeAdvogado = teclado.nextLine();
+                            System.out.println("Categoria do Lembrete: ");
+                            categoria = teclado.nextLine();
                             System.out.println("Escreva o lembrete que deseja adicionar: ");
-                            bilhete = teclado.nextLine();
-                            lembreteProcesso.gerarLembrete(1, new Date().toString(), "Tribunal", bilhete, "Status");
+                            assunto = teclado.nextLine();
+                            System.out.println("Digite o Status do Bilhete: ");
+                            status = teclado.nextLine();
+                            lembreteProcesso.gerarLembrete(numProcesso,numAudiencia,dataAudiencia, tribunal, vara, nomeEmpregador, nomeAdvogado, categoria, assunto, status);
                             break;
                         case 2:
-                            lembreteProcesso.mostrarLembrte(01);
+                            lembreteProcesso.mostrarLembrte();
                             break;
                         case 3:
                             System.out.println("Você escolheu Sair!");
@@ -116,19 +146,19 @@ public class Themis {
                     System.out.print("Tribunal: ");
                     String trib = teclado.nextLine();
                     System.out.print("Vara: ");
-                    String vara = teclado.nextLine();
+                    vara = teclado.nextLine();
                     System.out.print("Orgão Judicial: ");
                     String orgao = teclado.nextLine();
                     System.out.print("Categoria: ");
                     String categ = teclado.nextLine();
                     System.out.print("Assunto: ");
-                    String assunto = teclado.nextLine();
+                    assunto = teclado.nextLine();
                     System.out.print("Nome do Empregador: ");
                     String nomeEmp = teclado.nextLine();
                     System.out.print("Nome do Advogado: ");
                     String nomeAdv = teclado.nextLine();
                     System.out.print("Status: ");
-                    String status = teclado.nextLine();
+                    status = teclado.nextLine();
                     System.out.print("Sentença: ");
                     String sentenca = teclado.nextLine();
                     System.out.print("Remuneração: ");
@@ -181,7 +211,7 @@ public class Themis {
                     break;
                 case 7:
                     System.out.println("Você escolheu Sair");
-                    i=1;
+                    i = 1;
                     break;
                 default:
                     System.out.println("Opção Invalida!");
